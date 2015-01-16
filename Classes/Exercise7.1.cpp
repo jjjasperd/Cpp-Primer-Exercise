@@ -12,8 +12,7 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     Sales_Data total;
-    double price = 0.0;
-    if(cin >> total.bookNo >> total.units_sold >> price){
+    if(cin >> total.bookNo >> total.units_sold >> total.revenue){
         Sales_Data trans;
         while(cin >> trans.bookNo >> trans.units_sold >> trans.revenue){
             if (total.bookNo == trans.bookNo) {
