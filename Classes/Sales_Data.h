@@ -13,6 +13,13 @@
 
 using namespace std;
 struct Sales_Data{
+    
+    Sales_Data() = default;
+    Sales_Data(const string &s):bookNo(s){}
+    Sales_Data(const string&s,unsigned n, double p):
+    bookNo(s),units_sold(n),revenue(p*n){}
+    Sales_Data(istream &);
+    
     std::string isbn() const { return bookNo; }
     Sales_Data& combine(const Sales_Data&);
     //double avg_price() const;
@@ -45,5 +52,9 @@ Sales_Data add(const Sales_Data &lhs, const Sales_Data &rhs){
     Sales_Data sum = lhs;
     sum.combine(rhs);
     return sum;
+}
+
+Sales_Data::Sales_Data(istream &is){
+    read(is,*this);
 }
 #endif
