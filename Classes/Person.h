@@ -11,7 +11,13 @@
 #include <string>
 #include <iostream>
 
+using namespace std;
 struct Person{
+    Person() = default;
+    Person(const std::string &s) : name(s){}
+    Person(const std::string &s , const std::string &a):
+    name(s),address(a){}
+    person(std::istream &);
     std::string get_name() const { return name; }
     std::string get_address() const { return address;}
     std::string name;
@@ -26,5 +32,9 @@ istream &read(istream &is, Person &per){
 ostream &print(ostream &os, const Person &per){
     os << per.get_name() <<" "<<per.get_address;
     return os;
+}
+
+Person::Person(std::istream is&){
+    read(is, *this);
 }
 #endif
