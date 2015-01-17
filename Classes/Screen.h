@@ -10,15 +10,28 @@
 #define Classes_Screen_h
 #include<iostream>
 #include<string>
+#include <vector>
 
 using namespace std;
+
+class Screen;
+
+class Window_mgr {
+public:
+    using ScreenIndex = vector<Screen>::size_type;
+    inline void clear(ScreenIndex);
+private:
+    vector<Screen> screens;
+};
 
 class Screen{
 public:
     using pos = string::size_type;
+    friend void Window_mgr::clear(ScreenIndex);
+    
     Screen() = default;
     Screen(pos ht, pos wd):
-    height(ht),width(wd),contents(ht*wd, ' '){}
+    height(ht),width(wd),contents(ht * wd, ' '){}
     Screen(pos ht,pos wd, char c):
     height(ht),width(wd),contents(ht * wd, c){}
     Screen &set(char);
@@ -45,6 +58,12 @@ private:
         os <<contents;
     }
 };
+
+inline void Window_mgr::clear(ScreenIndex i)
+{
+    Screen &s = screens[i];
+    s.contents = std::string(s.height * s.width, ' ');
+}
 
 inline
 Screen &Screen::move(pos r, pos c){
