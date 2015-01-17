@@ -1,5 +1,5 @@
 //
-//  Header.h
+//  Person.h
 //  Classes
 //
 //  Created by DuanYujia on 1/16/15.
@@ -12,16 +12,20 @@
 #include <iostream>
 
 using namespace std;
-struct Person{
+class Person{
+    friend istream &read(istream &, Person &);
+    friend ostream &print(ostream &, const Person &);
+public:
     Person() = default;
     Person(const std::string &s) : name(s){}
     Person(const std::string &s , const std::string &a):
     name(s),address(a){}
-    person(std::istream &);
-    std::string get_name() const { return name; }
-    std::string get_address() const { return address;}
-    std::string name;
-    std::string address;
+    person(istream &);
+    string get_name() const { return name; }
+    string get_address() const { return address;}
+private:
+    string name;
+    string address;
 };
 
 istream &read(istream &is, Person &per){
@@ -34,7 +38,7 @@ ostream &print(ostream &os, const Person &per){
     return os;
 }
 
-Person::Person(std::istream is&){
+Person::Person(istream is&){
     read(is, *this);
 }
 #endif
