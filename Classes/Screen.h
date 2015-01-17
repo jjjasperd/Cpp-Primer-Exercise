@@ -15,7 +15,9 @@ using namespace std;
 class Screen{
 public:
     using pos = string::size_type;
-    Screen = default;
+    Screen() = default;
+    Screen(pos ht, pos wd):
+    height(ht),width(wd),contents(ht*wd, ' '){}
     Screen(pos ht,pos wd, char c):
     height(ht),width(wd),contents(ht * wd, c){}
     char get() const{
