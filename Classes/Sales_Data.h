@@ -23,13 +23,14 @@ public:
     Sales_Data(const string&s,unsigned n, double p):
     bookNo(s),units_sold(n),revenue(p*n){}
     Sales_Data(istream &);
-
+    
     string isbn() const { return bookNo; }
     Sales_Data& combine(const Sales_Data&);
-    //double avg_price() const;
+
     
     
 private:
+    inline double avg_price() const;
     std::string bookNo;
     unsigned units_sold = 0;
     double revenue = 0.0;
@@ -54,7 +55,7 @@ istream &read(istream &is, Sales_Data &item){
 
 ostream &print(ostream &os, const Sales_Data &item){
     os << item.isbn() <<" " << item.units_sold << " "
-    << item.revenue ;//<< item.avg_price();
+    << item.revenue << item.avg_price();
     return os;
 }
 
@@ -67,4 +68,9 @@ Sales_Data add(const Sales_Data &lhs, const Sales_Data &rhs){
 Sales_Data::Sales_Data(istream &is){
     read(is, *this);
 }
+
+inline
+double Sales_Data::avg_price() const{
+    return units_sold ? revenue/units_sold :0;}
+
 #endif
