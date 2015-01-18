@@ -18,15 +18,22 @@ class Sales_Data{
     friend ostream &print(ostream &, const Sales_Data &);
     
 public:
-    Sales_Data() = default;
-    Sales_Data(const string &s):bookNo(s){}
     Sales_Data(const string&s,unsigned n, double p):
-    bookNo(s),units_sold(n),revenue(p*n){}
-    Sales_Data(istream &);
+    bookNo(s),units_sold(n),revenue(p*n){
+        cout << " delegate" << endl;}
+    Sales_Data():Sales_Data(" ",0,0.0){
+        cout <<" Sales_Data" << endl;} //= default;
+    Sales_Data(const string &s):Sales_Data(s,0,0){
+        cout << " Sales_data (const string &s)"<<endl;
+    }
+    Sales_Data(istream &is):Sales_Data(){
+        read(is,*this);
+        cout << " Sales_data ( istream &is)" << endl;
+    }
     
     string isbn() const { return bookNo; }
     Sales_Data& combine(const Sales_Data&);
-
+    
     
     
 private:
@@ -36,10 +43,10 @@ private:
     double revenue = 0.0;
 };
 /*
-Sales_Data add(const Sales_Data &, const Sales_Data &);
-istream &read(istream &, Sales_Data &);
-ostream &print(ostream &, Sales_Data &);
-*/
+ Sales_Data add(const Sales_Data &, const Sales_Data &);
+ istream &read(istream &, Sales_Data &);
+ ostream &print(ostream &, Sales_Data &);
+ */
 Sales_Data& Sales_Data::combine(const Sales_Data &rhs){
     units_sold += rhs.units_sold;
     revenue += rhs.revenue;
@@ -65,9 +72,6 @@ Sales_Data add(const Sales_Data &lhs, const Sales_Data &rhs){
     return sum;
 }
 
-Sales_Data::Sales_Data(istream &is){
-    read(is, *this);
-}
 
 inline
 double Sales_Data::avg_price() const{
